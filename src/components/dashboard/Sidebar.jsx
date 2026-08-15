@@ -40,22 +40,11 @@ export const Sidebar = ({ isOpen, onClose }) => {
       name: 'Orders Management',
       path: '/admin/orders',
       icon: ShoppingBag,
-      badge: 'Student 2',
-      disabled: true,
     },
     {
       name: 'Customers & Staff',
       path: '/admin/users',
       icon: Users,
-      badge: 'Student 2',
-      disabled: true,
-    },
-    {
-      name: 'Restaurant Settings',
-      path: '/admin/settings',
-      icon: Settings,
-      badge: 'Student 2',
-      disabled: true,
     },
   ];
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Search,
   Filter,
@@ -11,11 +11,12 @@ import {
   Sparkles,
   RefreshCw,
   Eye,
-  SlidersHorizontal
-} from 'lucide-react';
-import dishesApi from '../../api/dishesApi';
-import { TableRowSkeleton } from '../../components/common/LoadingSkeleton';
-import ErrorAlert from '../../components/common/ErrorAlert';
+  SlidersHorizontal,
+} from "lucide-react";
+import dishesApi from "../../api/dishesApi";
+import { TableRowSkeleton } from "../../components/common/LoadingSkeleton";
+import ErrorAlert from "../../components/common/ErrorAlert";
+import Addfrm from "./Addfrm.jsx";
 
 export const DishesListing = () => {
   const [dishes, setDishes] = useState([]);
@@ -23,11 +24,24 @@ export const DishesListing = () => {
   const [error, setError] = useState(null);
 
   // Search & Filter state
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [viewMode, setViewMode] = useState('table'); // 'table' | 'grid'
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [viewMode, setViewMode] = useState("table"); // 'table' | 'grid'
 
-  const categories = ['All', 'Appetizer', 'Main Course', 'Dessert', 'Beverage'];
+  const categories = ["All", "Appetizer", "Main Course", "Dessert", "Beverage"];
+
+  const [addfrm, setaddfrm] = useState(false);
+  const [selectedDish, setSelectedDish] = useState(null);
+
+  const handleEdit = (dish) => {
+    setSelectedDish(dish);
+    setaddfrm(true);
+  };
+
+  const handleAddNew = () => {
+    setSelectedDish(null);
+    setaddfrm(true);
+  };
 
   const fetchDishes = useCallback(async () => {
     setLoading(true);
@@ -37,11 +51,11 @@ export const DishesListing = () => {
         search: searchQuery,
         category: selectedCategory,
       });
-      const items = Array.isArray(response) ? response : (response.data || []);
+      const items = Array.isArray(response) ? response : response.data || [];
       setDishes(items);
     } catch (err) {
-      console.error('Failed to load dishes:', err);
-      setError(err.message || 'Unable to retrieve dishes from the server.');
+      console.error("Failed to load dishes:", err);
+      setError(err.message || "Unable to retrieve dishes from the server.");
     } finally {
       setLoading(false);
     }
@@ -56,17 +70,26 @@ export const DishesListing = () => {
     return () => clearTimeout(timer);
   }, [fetchDishes]);
 
-  const handleCreatePlaceholder = () => {
-    alert('Create Dish Modal/Form slot ready for Student 2 CRUD integration.');
-  };
-
   const handleEditPlaceholder = (dish) => {
     alert(`Edit "${dish.name}" slot ready for Student 2 CRUD integration.`);
   };
 
-  const handleDeletePlaceholder = (dish) => {
-    if (window.confirm(`Are you sure you want to delete "${dish.name}"? (Simulated for Student 2)`)) {
-      setDishes((prev) => prev.filter((d) => (d.id || d._id) !== (dish.id || dish._id)));
+  const handleDelete = async (dish) => {
+    const dishId = dish.id || dish._id;
+
+    if (window.confirm(`Are you sure you want to delete "${dish.name}"?`)) {
+      try {
+        await dishesApi.deleteDish(dishId);
+
+        setDishes((prev) => prev.filter((d) => (d.id || d._id) !== dishId));
+      } catch (err) {
+        console.error("Failed to delete dish:", err);
+        alert(
+          err.response?.data?.message ||
+            err.message ||
+            "Failed to delete dish from server.",
+        );
+      }
     }
   };
 
@@ -79,7 +102,8 @@ export const DishesListing = () => {
             Dishes & Menu Catalog
           </h1>
           <p className="text-xs sm:text-sm text-stone-500 mt-0.5">
-            Manage culinary offerings, ingredients, price tiers, and featured status
+            Manage culinary offerings, ingredients, price tiers, and featured
+            status
           </p>
         </div>
 
@@ -91,23 +115,41 @@ export const DishesListing = () => {
             className="p-2.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 transition-colors shadow-soft"
             title="Refresh list"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
           </button>
 
           <button
             type="button"
-            onClick={handleCreatePlaceholder}
+            onClick={() => {
+              if (addfrm) {
+                setaddfrm(false);
+                setSelectedDish(null);
+              } else {
+                setSelectedDish(null);
+                setaddfrm(true);
+              }
+            }}
             className="inline-flex items-center space-x-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-glow transition-all duration-200 hover:-translate-y-0.5"
           >
-            <Plus className="w-4 h-4" />
-            <span>Add New Dish</span>
+            <span>{addfrm ? "Close Form" : "+ Add New Dish"}</span>
           </button>
+          {addfrm && (
+            <Addfrm
+              isOpen={addfrm}
+              initialDish={selectedDish}
+              onClose={() => {
+                setaddfrm(false);
+                setSelectedDish(null);
+              }}
+              onSaveSuccess={() => {
+                fetchDishes();
+              }}
+            />
+          )}
         </div>
       </div>
 
-      {/* Search & Category Filter Bar */}
       <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-soft flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* Search Input */}
         <div className="relative w-full md:max-w-md">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
             <Search className="w-4 h-4" />
@@ -134,8 +176,8 @@ export const DishesListing = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1.5 rounded-xl text-xs font-medium shrink-0 transition-all ${
                 selectedCategory === cat
-                  ? 'bg-stone-900 text-white shadow-sm'
-                  : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                  ? "bg-stone-900 text-white shadow-sm"
+                  : "bg-stone-100 text-stone-600 hover:bg-stone-200"
               }`}
             >
               {cat}
@@ -178,7 +220,10 @@ export const DishesListing = () => {
                 </>
               ) : dishes.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-stone-400 text-sm">
+                  <td
+                    colSpan={6}
+                    className="py-12 text-center text-stone-400 text-sm"
+                  >
                     No dishes found matching your search or filter criteria.
                   </td>
                 </tr>
@@ -192,7 +237,10 @@ export const DishesListing = () => {
                     <td className="py-4 px-6">
                       <div className="flex items-center space-x-3.5">
                         <img
-                          src={dish.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=200'}
+                          src={
+                            dish.image ||
+                            "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=200"
+                          }
                           alt={dish.name}
                           className="w-12 h-12 rounded-xl object-cover shrink-0 ring-1 ring-stone-200"
                         />
@@ -201,12 +249,13 @@ export const DishesListing = () => {
                             <span className="font-semibold text-stone-900 text-sm truncate">
                               {dish.name}
                             </span>
-                            {dish.rating && (
-                              <span className="inline-flex items-center space-x-0.5 text-[11px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-md">
-                                <Star className="w-3 h-3 fill-amber-400" />
-                                <span>{dish.rating}</span>
-                              </span>
-                            )}
+                            {dish.rating !== undefined &&
+                              dish.rating !== null && (
+                                <span className="inline-flex items-center space-x-0.5 text-[11px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-md">
+                                  <Star className="w-3 h-3 fill-amber-400" />
+                                  <span>{Number(dish.rating).toFixed(1)}</span>
+                                </span>
+                              )}
                           </div>
                           <p className="text-xs text-stone-500 line-clamp-1 max-w-sm">
                             {dish.description}
@@ -243,7 +292,7 @@ export const DishesListing = () => {
 
                     {/* Availability Status */}
                     <td className="py-4 px-4">
-                      {dish.isAvailable !== false ? (
+                      {dish.available ? (
                         <span className="inline-flex items-center space-x-1 text-emerald-600 text-xs font-medium">
                           <CheckCircle2 className="w-4 h-4" />
                           <span>Available</span>
@@ -261,15 +310,15 @@ export const DishesListing = () => {
                       <div className="flex items-center justify-end space-x-1.5">
                         <button
                           type="button"
-                          onClick={() => handleEditPlaceholder(dish)}
+                          onClick={() => handleEdit(dish)}
                           className="p-1.5 rounded-lg text-stone-500 hover:text-brand-600 hover:bg-stone-100 transition-colors"
-                          title="Edit Dish (Student 2)"
+                          title="Edit Dish"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button
                           type="button"
-                          onClick={() => handleDeletePlaceholder(dish)}
+                          onClick={() => handleDelete(dish)}
                           className="p-1.5 rounded-lg text-stone-500 hover:text-red-600 hover:bg-red-50 transition-colors"
                           title="Delete Dish (Student 2)"
                         >
@@ -288,7 +337,9 @@ export const DishesListing = () => {
         {!loading && (
           <div className="p-4 bg-stone-50 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-500 gap-2">
             <span>Showing {dishes.length} dishes in catalog</span>
-            <span className="text-stone-400">Student 1 Base Listing Active • CRUD ready for Student 2</span>
+            <span className="text-stone-400">
+              Student 1 Base Listing Active • CRUD ready for Student 2
+            </span>
           </div>
         )}
       </div>

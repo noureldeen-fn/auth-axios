@@ -1,0 +1,106 @@
+[
+  {
+    "id": "1786831782655",
+    "userId": "1786743106509",
+    "items": [
+      {
+        "menuItemId": "5",
+        "name": "Fresh Fattoush Salad",
+        "price": 55,
+        "quantity": 2,
+        "lineTotal": 110
+      },
+      {
+        "menuItemId": "2",
+        "name": "Egyptian Koshari",
+        "price": 50,
+        "quantity": 4,
+        "lineTotal": 200
+      }
+    ],
+    "total": 310,
+    "status": "completed",
+    "createdAt": "2026-08-15T22:09:42.655Z"
+  },
+  {
+    "id": "1786833775550",
+    "userId": "1786833745718",
+    "items": [
+      {
+        "menuItemId": "6",
+        "name": "Sambousek (6 pcs)",
+        "price": 70,
+        "quantity": 1,
+        "lineTotal": 70
+      },
+      {
+        "menuItemId": "1786833459562",
+        "name": "Water",
+        "price": 1.5,
+        "quantity": 1,
+        "lineTotal": 1.5
+      },
+      {
+        "menuItemId": "9",
+        "name": "Fresh Mango Juice",
+        "price": 40,
+        "quantity": 1,
+        "lineTotal": 40
+      },
+      {
+        "menuItemId": "7",
+        "name": "Classic Umm Ali",
+        "price": 60,
+        "quantity": 1,
+        "lineTotal": 60
+      }
+    ],
+    "total": 171.5,
+    "status": "pending",
+    "createdAt": "2026-08-15T22:42:55.550Z"
+  },
+  {
+    "id": "1786835123674",
+    "userId": "1786835087028",
+    "items": [
+      {
+        "menuItemId": "1",
+        "name": "Chicken Shawarma Wrap",
+        "price": 120,
+        "quantity": 2,
+        "lineTotal": 240
+      },
+      {
+        "menuItemId": "2",
+        "name": "Egyptian Koshari",
+        "price": 50,
+        "quantity": 1,
+        "lineTotal": 50
+      },
+      {
+        "menuItemId": "5",
+        "name": "Fresh Fattoush Salad",
+        "price": 55,
+        "quantity": 1,
+        "lineTotal": 55
+      },
+      {
+        "menuItemId": "6",
+        "name": "Sambousek (6 pcs)",
+        "price": 70,
+        "quantity": 1,
+        "lineTotal": 70
+      },
+      {
+        "menuItemId": "8",
+        "name": "Golden Kunafa Slice",
+        "price": 75,
+        "quantity": 1,
+        "lineTotal": 75
+      }
+    ],
+    "total": 490,
+    "status": "pending",
+    "createdAt": "2026-08-15T23:05:23.674Z"
+  }
+]

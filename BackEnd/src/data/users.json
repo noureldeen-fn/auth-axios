@@ -1,0 +1,44 @@
+[
+  {
+    "id": "1786527832777",
+    "name": "Admin",
+    "email": "admin@techmaster.com",
+    "password": "$2a$10$9S/xGXF5cO5UiQ/6eLkJCuMMTxsXONs2jqIt7oSZw25xrxfXUZ3Be",
+    "role": "admin",
+    "createdAt": "2026-08-12T09:43:52.777Z"
+  },
+  {
+    "id": "1786716608444",
+    "name": "Chef Alessandro Rossi",
+    "email": "admin@savorybistro.com",
+    "password": "$2a$10$ShheHbJAJSunto921tD3lekR83B8Fg/p6WzCBPDUp0FWvVGxpk0mW",
+    "avatar": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&q=80&w=250",
+    "role": "admin",
+    "createdAt": "2026-08-14T14:10:08.444Z"
+  },
+  {
+    "id": "1786743106509",
+    "name": "Sophia Laurent",
+    "email": "customer@savorybistro.com",
+    "password": "$2a$10$iO873jQK.zhzPspsXV0EHOoSqzg19zSI6FoginZIV5FdkiNxMwYYm",
+    "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=250",
+    "role": "user",
+    "createdAt": "2026-08-14T21:31:46.509Z"
+  },
+  {
+    "id": "1786833745718",
+    "name": "Mohamed Essam",
+    "email": "mohamed@email.com",
+    "password": "$2a$10$H2ntwoygE/VlpUs70M43jOIniTi.0ECpGquhhxpSAWbQzo9WMRhYm",
+    "role": "user",
+    "createdAt": "2026-08-15T22:42:25.718Z"
+  },
+  {
+    "id": "1786835087028",
+    "name": "Elon Musk",
+    "email": "musk@tesla.com",
+    "password": "$2a$10$Z4gSoqib31ZaFDmXWijpOOQsCU4vMXqQxvKhDVts9IY8hn4T.uD/O",
+    "role": "user",
+    "createdAt": "2026-08-15T23:04:47.028Z"
+  }
+]

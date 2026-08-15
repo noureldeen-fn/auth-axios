@@ -1,7 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { UtensilsCrossed, LogIn, LogOut, LayoutDashboard, User, Menu, X, ChevronDown } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import {
+  UtensilsCrossed,
+  LogIn,
+  LogOut,
+  LayoutDashboard,
+  User,
+  Menu,
+  X,
+  ChevronDown,
+  ShoppingBag,
+} from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext";
 
 export const Navbar = () => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
@@ -10,13 +21,14 @@ export const Navbar = () => {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { totalCount, setIsCartOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close dropdowns on route change
@@ -28,22 +40,22 @@ export const Navbar = () => {
   const handleLogout = async () => {
     await logout();
     setUserDropdownOpen(false);
-    navigate('/login');
+    navigate("/login");
   };
 
   const navLinks = [
-    { name: 'Home', href: '/#hero' },
-    { name: 'About Us', href: '/#about' },
-    { name: 'Signature Menu', href: '/#featured' },
-    { name: 'Hours & Location', href: '/#info' },
+    { name: "Home", href: "/#hero" },
+    { name: "About Us", href: "/#about" },
+    { name: "Signature Menu", href: "/#featured" },
+    { name: "Hours & Location", href: "/#info" },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-stone-200/60 py-3'
-          : 'bg-transparent py-5'
+          ? "bg-white/90 backdrop-blur-md shadow-sm border-b border-stone-200/60 py-3"
+          : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -87,27 +99,36 @@ export const Navbar = () => {
                   aria-expanded={userDropdownOpen}
                 >
                   <img
-                    src={user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&background=ea580c&color=fff`}
+                    src={
+                      user?.avatar ||
+                      `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "User")}&background=ea580c&color=fff`
+                    }
                     alt={user?.name}
                     className="w-8 h-8 rounded-full object-cover ring-2 ring-brand-500/20"
                   />
                   <div className="text-left hidden lg:block">
                     <p className="text-xs font-semibold text-stone-800 leading-tight">
-                      {user?.name?.split(' ')[0]}
+                      {user?.name?.split(" ")[0]}
                     </p>
                     <p className="text-[10px] text-stone-500 capitalize">
                       {user?.role}
                     </p>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-stone-500 transition-transform duration-200 ${userDropdownOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    className={`w-4 h-4 text-stone-500 transition-transform duration-200 ${userDropdownOpen ? "rotate-180" : ""}`}
+                  />
                 </button>
 
                 {/* Dropdown Menu */}
                 {userDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-card border border-stone-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="px-4 py-2.5 border-b border-stone-100">
-                      <p className="text-sm font-semibold text-stone-900 truncate">{user?.name}</p>
-                      <p className="text-xs text-stone-500 truncate">{user?.email}</p>
+                      <p className="text-sm font-semibold text-stone-900 truncate">
+                        {user?.name}
+                      </p>
+                      <p className="text-xs text-stone-500 truncate">
+                        {user?.email}
+                      </p>
                       <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-medium bg-brand-50 text-brand-700 rounded-full border border-brand-200 capitalize">
                         {user?.role} Access
                       </span>
@@ -146,7 +167,16 @@ export const Navbar = () => {
                 </Link>
               </div>
             )}
+            <button onClick={() => setIsCartOpen(true)} className="relative p-2">
+            <ShoppingBag className="w-6 h-6 text-stone-700" />
+            {totalCount > 0 && (
+              <span className="absolute top-0 right-0 bg-brand-600 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                {totalCount}
+              </span>
+            )}
+          </button>
           </div>
+          
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center space-x-2">
@@ -156,7 +186,11 @@ export const Navbar = () => {
               className="p-2 rounded-xl text-stone-700 hover:text-brand-600 hover:bg-stone-100 focus:outline-none"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
@@ -182,13 +216,20 @@ export const Navbar = () => {
                 <>
                   <div className="flex items-center space-x-3 p-2 bg-stone-50 rounded-xl">
                     <img
-                      src={user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}`}
+                      src={
+                        user?.avatar ||
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "User")}`
+                      }
                       alt={user?.name}
                       className="w-10 h-10 rounded-full object-cover"
                     />
                     <div>
-                      <p className="text-sm font-semibold text-stone-800">{user?.name}</p>
-                      <p className="text-xs text-stone-500 capitalize">{user?.role}</p>
+                      <p className="text-sm font-semibold text-stone-800">
+                        {user?.name}
+                      </p>
+                      <p className="text-xs text-stone-500 capitalize">
+                        {user?.role}
+                      </p>
                     </div>
                   </div>
 

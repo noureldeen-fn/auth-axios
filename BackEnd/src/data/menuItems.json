@@ -1,0 +1,158 @@
+[
+  {
+    "id": "1",
+    "name": "Chicken Shawarma Wrap",
+    "category": "Main Course",
+    "price": 120,
+    "description": "Grilled chicken shawarma with garlic sauce, pickles, and fries in a warm wrap.",
+    "image": "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&q=80&w=800",
+    "tags": [
+      "Best Seller",
+      "Popular"
+    ],
+    "rating": 4.8,
+    "reviewsCount": 142,
+    "isFeatured": true,
+    "available": true,
+    "createdAt": "2026-01-05T10:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "name": "Egyptian Koshari",
+    "category": "Main Course",
+    "price": 50,
+    "description": "Classic Egyptian koshari — rice, lentils, macaroni, crispy onions, and spicy tomato sauce.",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800",
+    "tags": [
+      "Traditional",
+      "Vegan"
+    ],
+    "rating": 4.9,
+    "reviewsCount": 230,
+    "isFeatured": true,
+    "available": true,
+    "createdAt": "2026-01-05T10:05:00.000Z"
+  },
+  {
+    "id": "5",
+    "name": "Fresh Fattoush Salad",
+    "category": "Appetizer",
+    "price": 55,
+    "description": "Crisp mixed greens, tomatoes, and toasted pita with pomegranate molasses dressing.",
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=800",
+    "tags": [
+      "Healthy",
+      "Vegetarian"
+    ],
+    "rating": 4.6,
+    "reviewsCount": 54,
+    "isFeatured": false,
+    "available": true,
+    "createdAt": "2026-01-05T10:20:00.000Z"
+  },
+  {
+    "id": "6",
+    "name": "Sambousek (6 pcs)",
+    "category": "Appetizer",
+    "price": 70,
+    "description": "Crispy pastry pockets filled with melted mixed cheese, fried golden.",
+    "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&q=80&w=800",
+    "tags": [
+      "Crispy",
+      "Starters"
+    ],
+    "rating": 4.8,
+    "reviewsCount": 88,
+    "isFeatured": true,
+    "available": true,
+    "createdAt": "2026-01-05T10:25:00.000Z"
+  },
+  {
+    "id": "7",
+    "name": "Classic Umm Ali",
+    "category": "Dessert",
+    "price": 60,
+    "description": "Warm Egyptian bread pudding with rich milk, mixed roasted nuts, and raisins.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQbcyB6s8kztFbNTqyA7E1tHRSvS6GMAIM6VNppYi1rg&s=10",
+    "tags": [
+      "Sweet",
+      "Traditional"
+    ],
+    "rating": 5,
+    "reviewsCount": 310,
+    "isFeatured": true,
+    "available": true,
+    "createdAt": "2026-01-05T10:30:00.000Z"
+  },
+  {
+    "id": "8",
+    "name": "Golden Kunafa Slice",
+    "category": "Dessert",
+    "price": 75,
+    "description": "Crispy shredded pastry layered with sweet cream and drenched in fragrant sugar syrup.",
+    "image": "https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&q=80&w=800",
+    "tags": [
+      "Sweet",
+      "Oriental"
+    ],
+    "rating": 4.9,
+    "reviewsCount": 190,
+    "isFeatured": false,
+    "available": true,
+    "createdAt": "2026-01-05T10:35:00.000Z"
+  },
+  {
+    "id": "9",
+    "name": "Fresh Mango Juice",
+    "category": "Beverage",
+    "price": 40,
+    "description": "Freshly squeezed seasonal mango juice, naturally sweet and refreshing.",
+    "image": "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&q=80&w=800",
+    "tags": [
+      "Fresh",
+      "Cold"
+    ],
+    "rating": 4.8,
+    "reviewsCount": 75,
+    "isFeatured": false,
+    "available": true,
+    "createdAt": "2026-01-05T10:40:00.000Z"
+  },
+  {
+    "id": "10",
+    "name": "Hibiscus Tea (Karkadeh)",
+    "category": "Beverage",
+    "price": 30,
+    "description": "Chilled brewed hibiscus flowers, a refreshing classic Egyptian favorite.",
+    "image": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&q=80&w=800",
+    "tags": [
+      "Traditional",
+      "Cold"
+    ],
+    "rating": 4.7,
+    "reviewsCount": 62,
+    "isFeatured": false,
+    "available": true,
+    "createdAt": "2026-01-05T10:45:00.000Z"
+  },
+  {
+    "id": "1786754815934",
+    "name": "gvhbj ml,;",
+    "category": "Main Course",
+    "price": 152,
+    "description": "fcgvhbjnkjftcfvgbhjk",
+    "image": "https://images.immediate.co.uk/production/volatile/sites/30/2020/02/Glass-and-bottle-of-milk-fe0997a.jpg",
+    "available": false,
+    "createdAt": "2026-08-15T00:46:55.934Z"
+  },
+  {
+    "id": "1786833459562",
+    "name": "Water",
+    "category": "Beverage",
+    "price": 1.5,
+    "description": "A fresh water",
+    "image": "https://images.albertsons-media.com/is/image/ABS/960043385-C1N1?$ng-ecom-pdp-desktop$&defaultImage=Not_Available",
+    "available": true,
+    "createdAt": "2026-08-15T22:37:39.562Z"
+  }
+]

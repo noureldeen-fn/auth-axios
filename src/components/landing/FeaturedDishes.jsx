@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Star, Sparkles, Plus, Clock } from 'lucide-react';
-import dishesApi from '../../api/dishesApi';
-import { DishCardSkeleton } from '../common/LoadingSkeleton';
-import { ErrorAlert } from '../common/ErrorAlert';
+import React, { useState, useEffect, useCallback } from "react";
+import { Star, Sparkles, Plus, Clock } from "lucide-react";
+import dishesApi from "../../api/dishesApi";
+import { DishCardSkeleton } from "../common/LoadingSkeleton";
+import { ErrorAlert } from "../common/ErrorAlert";
+import { useCart } from "../../context/CartContext";
 
 export const FeaturedDishes = () => {
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { addToCart } = useCart();
 
   const fetchFeaturedDishes = useCallback(async () => {
     setLoading(true);
@@ -15,11 +17,13 @@ export const FeaturedDishes = () => {
     try {
       const response = await dishesApi.getFeaturedDishes();
       // Supports response format { data: [...] } or direct array [...]
-      const items = Array.isArray(response) ? response : (response.data || []);
+      const items = Array.isArray(response) ? response : response.data || [];
       setDishes(items);
     } catch (err) {
-      console.error('Failed to fetch featured dishes:', err);
-      setError(err.message || 'Unable to retrieve featured dishes at this time.');
+      console.error("Failed to fetch featured dishes:", err);
+      setError(
+        err.message || "Unable to retrieve featured dishes at this time.",
+      );
     } finally {
       setLoading(false);
     }
@@ -42,7 +46,8 @@ export const FeaturedDishes = () => {
             Signature Featured Dishes
           </h2>
           <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-            Each seasonal dish is an expression of pure flavor, prepared with artisanal care and presentation.
+            Each seasonal dish is an expression of pure flavor, prepared with
+            artisanal care and presentation.
           </p>
         </div>
 
@@ -77,7 +82,10 @@ export const FeaturedDishes = () => {
                 {/* Image Container with Badges */}
                 <div className="relative h-56 overflow-hidden bg-stone-100">
                   <img
-                    src={dish.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800'}
+                    src={
+                      dish.image ||
+                      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800"
+                    }
                     alt={dish.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
@@ -125,7 +133,9 @@ export const FeaturedDishes = () => {
                   {/* Price & Action (Ready for Student 2 Cart Integration) */}
                   <div className="flex items-center justify-between pt-4 border-t border-stone-100">
                     <div>
-                      <span className="text-xs text-stone-400 block font-medium">Price</span>
+                      <span className="text-xs text-stone-400 block font-medium">
+                        Price
+                      </span>
                       <span className="text-2xl font-bold text-stone-900 font-serif">
                         ${Number(dish.price).toFixed(2)}
                       </span>
@@ -133,9 +143,8 @@ export const FeaturedDishes = () => {
 
                     <button
                       type="button"
-                      onClick={() => alert(`Selected "${dish.name}"! Ready for Student 2 cart/order flow.`)}
+                      onClick={() => addToCart(dish)}
                       className="inline-flex items-center space-x-1.5 px-4 py-2.5 bg-brand-50 hover:bg-brand-600 text-brand-700 hover:text-white font-semibold text-xs rounded-xl transition-all duration-200 border border-brand-200/80 hover:border-transparent active:scale-95 shadow-sm"
-                      title="Add to order"
                     >
                       <Plus className="w-4 h-4" />
                       <span>Order Dish</span>
@@ -149,7 +158,9 @@ export const FeaturedDishes = () => {
 
         {!loading && !error && dishes.length === 0 && (
           <div className="text-center py-12 bg-white rounded-3xl border border-stone-200 p-8">
-            <p className="text-stone-500 text-base">No featured dishes available currently.</p>
+            <p className="text-stone-500 text-base">
+              No featured dishes available currently.
+            </p>
           </div>
         )}
       </div>

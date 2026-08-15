@@ -9,6 +9,7 @@ export const authApi = {
    * Login user with email & password
    * @param {Object} credentials - { email, password }
    * @returns {Promise<{ user: Object, token: string }>}
+   * 
    */
   login: async (credentials) => {
     try {
@@ -59,7 +60,30 @@ export const authApi = {
       throw err;
     }
   },
-
+register: async (userData) => {
+    try {
+      const response = await axiosClient.post('/auth/register', userData);
+      return response.data;
+    } catch (err) {
+      const isNetworkError = !err.response || err.code === 'ERR_NETWORK' || err.message?.includes('Network Error');
+      
+      if (isNetworkError) {
+        const mockUser = {
+          id: Date.now().toString(),
+          name: userData.name,
+          email: userData.email,
+          role: 'customer'
+        };
+        const mockToken = `mock_jwt_token_customer_${Date.now()}`;
+        return {
+          user: mockUser,
+          token: mockToken,
+          message: 'Account created successfully (Demo Mode)',
+        };
+      }
+      throw err;
+    }
+  },
   /**
    * Logout user
    */

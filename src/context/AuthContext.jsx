@@ -65,6 +65,28 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const register = useCallback(async (userData) => {
+    try {
+      const response = await authApi.register(userData);
+      const receivedUser = response.user || response.data?.user || response.data?.data?.user;
+      const receivedToken = response.token || response.data?.token || response.data?.data?.token;
+
+      if (receivedToken) {
+        localStorage.setItem('token', receivedToken);
+        setToken(receivedToken);
+      }
+
+      if (receivedUser) {
+        localStorage.setItem('user', JSON.stringify(receivedUser));
+        setUser(receivedUser);
+      }
+
+      return { user: receivedUser, token: receivedToken };
+    } catch (error) {
+      throw error;
+    }
+  }, []);
+
   /**
    * Logout handler optimized with useCallback
    */
@@ -91,15 +113,16 @@ export const AuthProvider = ({ children }) => {
   /**
    * Context value memoized with useMemo to prevent unnecessary re-renders
    */
-  const contextValue = useMemo(() => ({
+const contextValue = useMemo(() => ({
     user,
     token,
     isAuthenticated: !!token && !!user,
     isAdmin,
     loading,
     login,
+    register, 
     logout,
-  }), [user, token, isAdmin, loading, login, logout]);
+  }), [user, token, isAdmin, loading, login, register, logout]);
 
   return (
     <AuthContext.Provider value={contextValue}>
